@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart - The Triple Act</title>
+    <link rel="icon" type="image/png" href="images/Favicon.png" sizes="80x80" />
+    <style>
+        :root {
+            --bg-body: #f4f7f9;
+            --text-main: #003366;
+            --accent-blue: #87ceeb;
+            --success-green: #3ab574;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --border-color: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .cart-header {
+            background: rgb(24, 201, 162);
+            max-width: 1300px;
+            margin: 0 auto 40px auto;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .cart-header h1 {
+            margin: 0;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 2rem;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 25px;
+        }
+
+        .cart-items-card {
+            border-left: 15px solid var(--accent-blue);
+            min-height: 750px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+
+        /* --- PRODUCT DISPLAY --- */
+        .product-display {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+        }
+
+        .img-placeholder {
+            width: 320px; 
+            height: 380px; 
+            background: #f8f9fa;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info h2 {
+            margin: 0;
+            font-size: 2.2rem;
+            color: var(--text-main);
+        }
+
+        .price { 
+            color: var(--success-green); 
+            font-size: 2.8rem; 
+            font-weight: bold; 
+            margin: 15px 0; 
+        }
+
+        /* --- CHECKOUT BUTTON (ZOOM OUT EFFECT) --- */
+        .checkout-btn {
+            background-color: var(--success-green);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            transform: scale(0.95); /* Zoom out effect */
+            background-color: #318b5b;
+        }
+
+        .checkout-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* --- TRUCK ANIMATION STYLES --- */
+        .delivery-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #f4f7f9;
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .animation-stage {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            text-align: center;
+        }
+
+        .road {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            height: 4px;
+            background: #cbd5e0;
+        }
+
+        .truck {
+            position: absolute;
+            bottom: 34px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 60px;
+            animation: truckBounce 0.4s ease infinite;
+        }
+
+        .truck-body {
+            position: absolute;
+            bottom: 10px;
+            width: 70px;
+            height: 45px;
+            background: var(--text-main);
+            border-radius: 4px;
+        }
+
+        .truck-cabin {
+            position: absolute;
+            bottom: 10px;
+            right: 0;
+            width: 25px;
+            height: 30px;
+            background: var(--accent-blue);
+            border-radius: 4px 10px 4px 4px;
+        }
+
+        .wheel {
+            position: absolute;
+            bottom: 0;
+            width: 15px;
+            height: 15px;
+            background: #333;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .wheel-back { left: 10px; }
+        .wheel-front { right: 15px; }
+
+        @keyframes truckBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-3px); }
+        }
+
+        /* Drive animation to move the truck off-screen (slowed for visibility) */
+        .truck.drive {
+            animation: truckDrive 2.6s cubic-bezier(.22,.9,.15,1) forwards;
+        }
+
+        @keyframes truckDrive {
+            0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            60% { transform: translateX(40vw) translateY(0); opacity: 1; }
+            100% { transform: translateX(120vw) translateY(0); opacity: 0; }
+        }
+
+        /* Road progress bar expands with the truck */
+        .road { position: absolute; bottom: 30px; width: 100%; height: 4px; background: #cbd5e0; overflow: visible; }
+        .road::after { content: ''; position: absolute; left: 50%; top: 0; height: 100%; width: 0; background: #cbd5e0; border-radius: 0; transform-origin: left; }
+        .road.expand::after { animation: roadExpand 2.6s cubic-bezier(.22,.9,.15,1) forwards; }
+
+        @keyframes roadExpand {
+            0% { width: 0; left: 50%; }
+            60% { width: 40vw; left: 50%; }
+            100% { width: 120vw; left: 50%; }
+        }
+
+        /* Message shown after truck departs */
+        #delivery-message { display: none; margin-top: 24px; text-align: center; opacity: 0; transition: opacity 1s ease; }
+        #delivery-message.show { display:block; opacity: 1; }
+        #delivery-message .check { font-size: 48px; color: var(--success-green); margin-bottom: 8px; display:block; animation: popCheck 1s ease; }
+
+        @keyframes popCheck { from { transform: scale(0.6); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+
+        /* --- EXISTING STYLES --- */
+        .details-footer { margin-top: 150px; border-top: 2px solid #c2bcbc; border-bottom: 2px solid #c2bcbc; padding-bottom: 40px; padding-top: 10px; }
+        .details-heading { font-size: 1.5rem; font-weight: bold; color: var(--text-main); margin-bottom: 15px; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .meta-item { font-size: 1.1rem; color: #555; }
+        .meta-item b { color: var(--text-main); }
+        .in-stock { color: green; font-weight: bold; }
+        .quantity-controls { display: flex; align-items: center; gap: 15px; margin: 25px 0; }
+        .qty-btn { background: #cbd5e0; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
+        #qty-display { font-size: 1.4rem; font-weight: bold; padding: 5px 25px; border: 2px solid #eee; border-radius: 10px; }
+        .delivery-form { display: grid; gap: 15px; }
+        .form-input { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 1rem; box-sizing: border-box; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 51, 102, 0.6); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .popup-box { background: white; padding: 40px; border-radius: 25px; width: 450px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border-top: 12px solid var(--accent-blue); animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .order-summary-box { background: #f8f9fa; border-radius: 12px; padding: 20px; text-align: left; margin: 20px 0; border: 1px solid #eee; }
+        @media (max-width: 1100px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .product-display { flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+            .img-placeholder { width: 70%; height: 320px; margin: 0 auto; }
+            .cart-items-card { min-height: auto; padding: 25px; }
+            .details-footer { margin-top: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .img-placeholder { width: 100%; height: 280px; }
+            .product-info { padding: 0 10px; }
+            .product-info h2 { font-size: 1.6rem; }
+            .price { font-size: 2.2rem; }
+            .checkout-btn { padding: 14px; font-size: 1rem; }
+            .cart-header { padding: 18px; }
+            .cart-header h1 { font-size: 1.6rem; }
+            .quantity-controls .qty-btn { width: 48px; height: 48px; font-size: 1.2rem; }
+            #qty-display { padding: 6px 18px; font-size: 1.05rem; }
+            .side-column .card { margin-top: 20px; }
+            .popup-box { width: 90%; padding: 20px; }
+            .animation-stage { width: 320px; height: 160px; }
+        }
+
+        @media (max-width: 480px) {
+            .img-placeholder { height: 220px; }
+            .product-info h2 { font-size: 1.4rem; }
+            .price { font-size: 1.8rem; }
+            .order-summary-box { padding: 12px; }
+            .checkout-btn { padding: 12px; font-size: 0.95rem; }
+            .popup-box { width: 95%; padding: 16px; }
+            .truck { width: 80px; height: 48px; }
+            .truck-body, .truck-cabin { height: 36px; }
+            .wheel { width: 12px; height: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="delivery-animation" class="delivery-overlay">
+        <div class="animation-stage">
+            <div class="road"></div>
+            <div class="truck">
+                <div class="truck-body"></div>
+                <div class="truck-cabin"></div>
+                <div class="wheel wheel-back"></div>
+                <div class="wheel wheel-front"></div>
+                <div style="position:absolute; top:-10px; left:20px; font-size:20px;">📦</div>
+            </div>
+            <h2 id="delivery-status" style="margin-top: 220px; color: var(--text-main);">Order Out for Delivery!</h2>
+            <div id="delivery-message">
+                <span class="check">✔️</span>
+                <h3 style="margin:6px 0 0; color: var(--success-green);">Your Order Has Been Placed</h3>
+            </div> 
+        </div>
+    </div>
+
+    <div id="checkout-popup" class="modal-overlay">
+        <div class="popup-box">
+            <h2 style="color: var(--text-main); margin: 0;">Order Details</h2>
+            <div class="order-summary-box">
+                <p style="margin: 0; font-size: 0.9rem; color: #666;">Status: <span style="color: var(--success-green); font-weight: bold;">Confirmed</span></p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                <div id="popup-product-info"></div>
+                <div style="display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold; font-size: 1.2rem; color: var(--text-main);">
+                    <span>Total Paid:</span>
+                    <span id="popup-total-price"></span>
+                </div>
+            </div>
+            <p style="color: #666; font-size: 1rem; margin-bottom: 25px;">Thank you for your purchase!</p>
+            <button class="checkout-btn" onclick="closeAndRedirect()" style="margin: 0;">Back to Home ➔</button>
+        </div>
+    </div>
+
+    <div class="cart-header">
+        <h1>🛒 My Cart</h1>
+    </div>
+
+    <div class="main-layout">
+        <div class="card cart-items-card">
+            <p class="section-title">cart-items</p>
+            <div id="cart-content"></div>
+
+            <div class="details-footer" id="details-section">
+                <div class="details-heading">Product details</div>
+                <div class="meta-grid">
+                    <div class="meta-item"><b>Category:</b> Fragrances</div>
+                    <div class="meta-item"><b>Type:</b> Oud Attars</div>
+                    <div class="meta-item"><b>Availability:</b> <span class="in-stock">In Stock</span></div>
+                    <div class="meta-item"><b>SKU:</b> <span id="display-sku"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="side-column" id="side-section">
+            <div class="card">
+                <p class="section-title">💰 Payment Details</p>
+                <div style="display: grid; gap: 10px;">
+                    <label><input type="radio" name="pay" checked> Cash on Delivery (COD)</label>
+                    <label><input type="radio" name="pay"> Online Payment</label>
+                </div>
+            </div>
+
+            <div class="card">
+                <p class="section-title">📦 Delivery Details</p>
+                <form class="delivery-form">
+                    <input type="text" class="form-input" placeholder="Full Name" required>
+                    <input type="text" class="form-input" placeholder="Shipping Address" required>
+                    <input type="tel" class="form-input" placeholder="Contact Number" required>
+                </form>
+            </div>
+
+            <div class="card">
+                <p class="section-title">📊 Order Summary</p>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Subtotal</span>
+                    <span id="sub-total">Rs 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-top: 2px solid #eee; padding-top: 15px; font-weight: bold; font-size: 1.4rem;">
+                    <span>Total</span>
+                    <span id="grand-total" style="color: var(--success-green);">Rs 0</span>
+                </div>
+                <button onclick="Checkout()" class="checkout-btn">Proceed to Checkout ➔</button>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    function renderCart() {
+        const rawData = localStorage.getItem('cartItems');
+        const container = document.getElementById('cart-content');
+        const layout = document.querySelector('.main-layout');
+        const detailsSection = document.getElementById('details-section');
+
+        if (!rawData || JSON.parse(rawData).length === 0) {
+            layout.innerHTML = `
+                <div class="card" style="text-align: center; width: 100%; grid-column: 1 / -1; border-left: 15px solid #ff4d4d; padding: 60px;">
+                    <h2 style="color: var(--text-main);">🛒 Your cart is empty.</h2>
+                    <p style="font-size: 1.2rem; color: #666;">Place an order to view details!</p>
+                    <button class="checkout-btn" onclick="window.location.href='Home.html'" style="width: auto; padding: 15px 40px; margin-top: 20px; margin-left:auto; margin-right:auto;">
+                        Return to Shop
+                    </button>
+                </div>
+            `;
+            return;
+        }
+
+        const cartList = JSON.parse(rawData);
+        const product = cartList[0]; 
+
+        // 1. Update Main Product View
+        container.innerHTML = `
+            <div class="product-display">
+                <div class="img-placeholder"><img src="${product.image}" alt="Product"></div>
+                <div class="product-info">
+                    <h2>${product.name}</h2>
+                    <p style="color:#666; margin: 5px 0;">Variant: ${product.variant || 'Standard'}</p>
+                    <p style="color:#666; margin: 5px 0;">Size: ${product.size}</p>
+                    <p class="price">Rs ${product.price}</p>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity(-1)">-</button>
+                        <span id="qty-display">${product.quantity}</span>
+                        <button class="qty-btn" onclick="updateQuantity(1)">+</button>
+                    </div>
+                    <a href="#" style="color:#ff4d4d; text-decoration:none;" onclick="clearCart()">Remove Item</a>
+                </div>
+            </div>
+        `;
+
+        // 2. DYNAMICALLY UPDATE FOOTER DETAILS
+        // We detect if it's an SPF or Serum based on the name or SKU
+        let category = "Fragrances";
+        let type = "";
+        detailsSection.innerHTML = `
+            <div class="details-heading">Product details</div>
+            <div class="meta-grid">
+                <div class="meta-item"><b>Category:</b> ${category||'skincare'||'haircare'}</div>
+                <div class="meta-item"><b>Type:</b> ${type||'N/A'}</div>
+                <div class="meta-item"><b>Availability:</b> <span class="in-stock">In Stock</span></div>
+                <div class="meta-item"><b>SKU:</b> <span>${product.sku || 'N/A'}</span></div>
+            </div>
+        `;
+
+        // 3. Update Totals
+        const total = product.price * product.quantity;
+        document.getElementById('sub-total').innerText = `Rs ${total}`;
+        document.getElementById('grand-total').innerText = `Rs ${total}`;
+    }
+
+    function updateQuantity(change) {
+        let cart = JSON.parse(localStorage.getItem('cartItems'));
+        if(cart && cart.length > 0) {
+            cart[0].quantity = Math.max(1, cart[0].quantity + change);
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            renderCart();
+        }
+    }
+
+    function Checkout() {
+        const rawData = localStorage.getItem('cartItems');
+        if (!rawData) return;
+        const cart = JSON.parse(rawData);
+        const product = cart[0];
+        const total = product.price * product.quantity;
+
+        document.getElementById('popup-product-info').innerHTML = `
+            <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                <span style="font-weight:bold; color:var(--text-main);">${product.name}</span>
+                <span>Qty: ${product.quantity}</span>
+            </div>
+            <div style="font-size: 0.8rem; color: #666; text-align: left;">
+                Variant: ${product.variant} | Size: ${product.size}
+            </div>
+        `;
+        document.getElementById('popup-total-price').innerText = `Rs ${total}`;
+        document.getElementById('checkout-popup').style.display = 'flex';
+    }
+
+    function closeAndRedirect() {
+        // Hide popup and show overlay
+        document.getElementById('checkout-popup').style.display = 'none';
+        const overlay = document.getElementById('delivery-animation');
+        overlay.style.display = 'flex';
+
+        const truck = overlay.querySelector('.truck');
+        const status = document.getElementById('delivery-status');
+        const message = document.getElementById('delivery-message');
+
+        // Ensure initial state
+        if(truck){ truck.style.display = ''; truck.classList.remove('drive'); }
+        if(message){ message.classList.remove('show'); }
+        if(status){ status.style.display = ''; status.textContent = 'Order Out for Delivery!'; }
+
+        // Start driving animation slightly after overlay shows
+        // Slightly longer start delay so the sequence is noticeable
+        setTimeout(()=>{
+            if(truck) truck.classList.add('drive');
+            const road = overlay.querySelector('.road');
+            if(road) road.classList.add('expand');
+        }, 200);
+
+        // When driving animation finishes, hide truck and show confirmation message
+        if(truck){
+            const onEnd = function(){
+                truck.removeEventListener('animationend', onEnd);
+                truck.style.display = 'none';
+                const road = overlay.querySelector('.road');
+                if(road) road.classList.remove('expand');
+                if(status) status.style.display = 'none';
+                if(message) message.classList.add('show');
+
+                // After a brief pause, clear cart and navigate home
+                setTimeout(()=>{
+                    overlay.style.display = 'none';
+                    localStorage.removeItem('cartItems');
+                    window.location.href = "Home.html";
+                }, 2750);
+            };
+            truck.addEventListener('animationend', onEnd);
+        } else {
+            // Fallback: after a short delay, clear cart and redirect
+            setTimeout(()=>{
+                overlay.style.display = 'none';
+                localStorage.removeItem('cartItems');
+                window.location.href = "Home.html";
+            }, 2750);
+        }
+    }
+
+    function clearCart() {
+        if(confirm("Are you sure you want to remove this item?")) {
+            localStorage.removeItem('cartItems');
+            location.reload();
+        }
+    }
+
+    window.onload = renderCart;
+</script>
+</body>
+</html>

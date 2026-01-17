@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title>The Triple Act • Home</title>
+    <link rel="icon" type="image/png" href="images/Favicon.png" sizes="16x16">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+      
+    }
+    body{
+     overflow-x: hidden;
+    }
+
+    html{
+      scroll-behavior: smooth;
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color:whitesmoke;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+   .main{
+    background: whitesmoke;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      height: 110px;
+      position: relative;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .logo img {
+      max-height: 170px;
+      width: 170px;
+      padding-top: 20px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 300px;
+      border-radius: 50px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 40px;
+      padding: 10px 45px 10px 20px;
+      border-radius: 50px;
+      border: 1px solid #ddd;
+      outline: none;
+      background-color: rgb(166, 252, 226);
+      color: black;
+      font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+      color: black;
+      font-weight: bold;
+      opacity: 0.7;
+    }
+
+    .search-box i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: black;
+      cursor: pointer;
+    }
+    .search-box:hover {
+      transform: translateY(-1.5px);
+      transition: transform 0.6s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      
+    }
+
+    .search-suggestions {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 1002;
+      display: none;
+    }
+
+    .search-suggestions.show {
+      display: block;
+    }
+
+    .search-suggestions .suggestion-item {
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #333;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .search-suggestions .suggestion-item:hover,
+    .search-suggestions .suggestion-item.active {
+      background: #f1f1f1;
+      color: #000;
+    }
+
+    .Product-card.highlight {
+      outline: 3px solid rgba(241, 174, 174, 0.9);
+      transform: translateY(-3px);
+      transition: outline 0.2s ease;
+    }
+
+    /* Generic highlight used for sections or products when navigated-to from search */
+    .highlight {
+      outline: 3px solid rgba(241, 174, 174, 0.9);
+      transition: outline 0.2s ease;
+      box-shadow: 0 4px 10px rgba(241, 174, 174, 0.12);
+    }
+
+    .icons {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    /* Profile dropdown */
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .profile-dropdown button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .profile-dropdown .profile-dropdown-content {
+      display:none;
+      position:absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border:1px solid #ddd;
+      border-radius:8px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.08);
+      min-width:160px;
+      z-index:1002;
+    }
+
+    .profile-dropdown .profile-dropdown-content.show { display:block; }
+
+    .profile-dropdown .profile-item {
+      display:block;
+      padding:10px 14px;
+      color:#333;
+      text-decoration:none;
+      border-bottom:1px solid #f1f1f1;
+    }
+    .profile-dropdown .profile-item:last-child { border-bottom: none; }
+    .profile-dropdown .profile-item:hover { background:#f6f6f6; color:#000; }
+
+    .icon-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+    }
+
+    /* Account name styling: slightly larger and bolder */
+    #account-name {
+      font-weight: 700; 
+      font-size: 17px; 
+      display: inline-block;
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 480px) {
+      /* scale back on small devices so layout remains balanced */
+      #account-name { font-size: 15px; }
+    }
+.icon-item a {
+      color: black;
+      text-decoration: none;
+    }
+    .icon-item i {
+      font-size: 15px;
+    }
+
+    .icon-item:hover {
+      color: rgb(148, 67, 64);
+    }
+
+    /* Navigation Bar Container */
+.nav {
+  display: flex;
+  justify-content: space-between; /* Centers the links */
+  align-items: space-around; /* Evenly spaces the links */
+  gap: 30px; /* Adds consistent spacing between links */
+  background-color: #ffe4cc; /* Matches your image background */
+  padding: 15px 45px;
+  font-family: sans-serif;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Dropdown Positioning */
+.dropdown {
+  position: relative; /* Crucial: anchors the dropdown list to this button */
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none; 
+  position: absolute; /* Floats the list over other content */
+  top: 100%; /* Places it directly below the button */
+  left: 0;
+  background-color: #fff;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  z-index: 1001;
+  margin-top: 10px;
+}
+
+/* Dropdown Links */
+.dropdown-content a {
+  color: #333;
+  padding: 10px 15px;
+  display: block;
+  font-weight: normal;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-content a:hover {
+  background-color: #f9f9f9;
+}
+
+/* Toggle Show Class */
+.show {
+  display: block;
+}
+
+    .nav a:hover {
+       color: rgb(202, 102, 98);
+    }
+
+    body {
+      padding-top: 160px;
+    }
+
+    .hero {
+      height: 1080px;
+      width: 100%;
+      background: url("[Main Hero Image]") center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding-bottom: 20px;
+    }
+
+    .category-section h2 {
+      text-align: center;
+      margin: 36px 0;
+      font-size: 34px;
+      color: black;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    .card-container {
+      display: flex;
+      align-items: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+      justify-content: space-evenly;
+      padding-bottom: 50px;
+    }
+
+    .category-card {
+      width: 100%;
+      max-width: 400px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .category-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .sub-categories {
+      background: linear-gradient(to right, #2a3a47 0%, #e18484 100%);
+      width: auto;
+      height: 60px;
+      color: #fff;
+      text-align: center;
+      font-size: 36px;
+      padding-top: 5px;
+    }
+    .Attar-container {
+      display: flex;
+      align-items: flex-start;
+      max-width:1200px;
+      margin: 0 auto;
+      justify-content: space-evenly;
+      padding-bottom: 50px;
+    }
+     .Product-card{
+      padding: 0.5px 0;
+      padding-bottom: 8px;
+      margin-bottom: 30px;
+      width: 300px;
+      max-width: 400px;
+      margin-top: 40px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      gap: 30px;
+     }
+    .Product-card:hover {
+      transform: translateY(-5px);
+    }
+.Product-card a{
+  text-decoration: none;
+}
+    .Product-card img {
+    width: 100%; 
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    object-fit: cover;
+    }
+    .caption {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 10px;
+      color: black;
+      font-weight: bold;
+    }
+    .Perfume-container {
+      display: flex;
+      align-items: flex-start;
+      max-width:1200px;
+      margin: 0 auto;
+      justify-content: space-evenly;
+      padding-bottom: 50px;
+    }
+    .sub-categories1 {
+      background: linear-gradient(to right,rgb(136, 111, 66),rgb(100, 151, 96));
+      width: auto;
+      height: 60px;
+      color: #fff;
+      text-align: center;
+      font-size: 36px;
+      padding-top: 5px;
+      -webkit-text-stroke: #849483 1px;
+      text-shadow:#000000 2px 2px 4px;
+    }
+    .Skin-container {
+      display: flex;
+      align-items: flex-start;
+      max-width:1200px;
+      margin: 0 auto;
+      justify-content: space-evenly;
+      padding-bottom: 50px;
+    }
+    .Hair-container {
+      display: flex;
+      align-items: flex-start;
+      max-width:1200px;
+      margin: 0 auto;
+      justify-content: space-evenly;
+      padding-bottom: 50px;
+    }
+    
+
+
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding-top: 50px;
+    position: relative;
+} 
+
+.footer-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 0 220px;
+} 
+
+.footer-column {
+    flex-grow: 1;
+    padding: 0 12px;
+
+    flex-basis: 22%; 
+}
+
+.logo-column {
+    flex-basis: 15%;
+}
+
+.footer h4 {
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9em;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.footer a:hover {
+    opacity: 1;
+}
+
+.footer .contact-column p {
+    margin: 0 0 10px 0;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+}
+
+.footer .contact-column i {
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.follow-heading {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.social-icons a {
+    font-size: 1.5em;
+    margin-right: 15px;
+    display: inline-block;
+    color: #fff;
+}
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    padding: 20px 40px;
+    margin-top: 40px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+.footer-logo {
+    max-width: 300px;
+    height: 300px;
+    filter: invert(1); 
+    position: absolute;
+    left: 40px; 
+    top: 50px;
+}
+
+@media (max-width: 600px) {
+    .footer-logo {
+        position: static;
+        display: block;
+        margin: 0 auto 10px;
+        max-width: 140px;
+    }
+    .footer-content-wrapper {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+  </style>
+  <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="top-bar">
+      <div class="logo">
+        <img src="images/LogoBGR.png" alt="Triple Act Logo" />
+      </div>
+
+      <div class="search-box">
+        <input id="site-search" type="text" placeholder="Search products..." autocomplete="off" />
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <div id="search-suggestions" class="search-suggestions" aria-label="Search suggestions" role="listbox"></div>
+      </div>
+
+      <div class="icons">
+        <div class="icon-item profile-dropdown" id="profile-dropdown">
+          <i class="fa-regular fa-user"></i>
+          <button id="account-btn" aria-haspopup="true" aria-expanded="false"><span id="account-name">ACCOUNT</span> <span class="arrow">▾</span></button>
+          <div id="profile-dropdown-content" class="profile-dropdown-content" role="menu" aria-hidden="true">
+            <a href="#" id="profile-view" class="profile-item">View Profile</a>
+            <a href="#" id="logout-btn" class="profile-item">Logout</a>
+          </div>
+        </div>
+        <div class="icon-item">
+          <i class="fa fa-shopping-cart"></i>
+          <span><a href="Cart.html">CART</a></span>
+        </div>
+      </div>
+    </div>
+
+   <nav class="nav">
+  <a href="Home.html">HOME</a>
+  <a href="#contact">CONTACT</a>
+  
+  <div class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn" onclick="toggleDropdown(event)">
+        CATEGORIES <span class="arrow">▾</span>
+    </a>
+    <div id="categoryDropdown" class="dropdown-content">
+      <a href="#fragrances">Fragrances</a>
+      <a href="#skincare">Skin Care</a>
+      <a href="#haircare">Hair Care</a>
+    </div>
+  </div>
+
+  <a href="#">DEALS</a>
+  <a href="#contact">ABOUT US</a>
+  <a href="#">BLOGS</a>
+</nav>
+  </header>
+  <main class="main">
+    <section class="hero">
+      <img src="images/Main Hero.jpg" alt="Hero Image" />
+    </section>
+    <div class="category-section" id="categories">
+      <h2>Categories</h2>
+
+      <div class="card-container">
+        <div class="category-card" data-target="skincare" role="button" tabindex="0" aria-label="Go to Skin & Hair Care section">
+          <img src="images/Skin and Hair Care Card.jpg" alt="Skin & Hair Care Products" />
+        </div>
+
+        <div class="category-card" data-target="fragrances" role="button" tabindex="0" aria-label="Go to Fragrances section">
+          <img src="images/Fragrances Card.jpg" alt="Fragrances Products" />
+        </div>
+      </div>
+    </div>
+    <div class="hero" id="fragrances">
+      <img src="images/Fragrance  Hero.jpg" alt="Fragrances" />
+    </div>
+    <div class="sub-categories">
+      <h3>Attars</h3>
+    </div>
+    <div id="Attar-container" class="Attar-container">
+        <div class="Product-card" id="product-oud-attar" data-keywords="agarwood, oud, pure, concentrated, 8ml, 15ml">
+          <a href="Oud Attar.html">
+          <img src="images/Oud Attar.jfif" alt="Oud Attar" />
+          <p class="caption">Oud Attar</p>
+          </a>
+        </div>
+
+        <div class="Product-card" id="product-natural-attar" data-keywords="natural, blend, 8ml, 15ml">
+          <a href="Natural Attar.html">
+          <img src="images/Natural Attar.jfif" alt="Natural Attar" />
+          <p class="caption">Natural Attar</p>
+          </a>
+        </div>
+        <div class="Product-card" id="product-herbal-attar" data-keywords="herbal, botanical, pure, 8ml, 15ml">
+          <a href="Herbal Attar.html">
+          <img src="images/Herbal Attar.jfif" alt="Herbal Attar" />
+          <p class="caption">Herbal Attar</p>
+          </a>
+        </div>
+    </div>
+    <div class="sub-categories">
+      <h3>Perfumes</h3>
+    </div>
+    <div id="Perfume-container" class="Perfume-container">
+        <div class="Product-card" id="product-azzaro" data-keywords="eau de toilette, edt, 50ml, 100ml, cologne">
+          <a href="Azzaro.html">
+          <img src="images/Azzaro 2.jpeg" alt="Azzaro perfume" />
+          <p class="caption">Azzaro</p>
+          </a>
+        </div>
+
+        <div class="Product-card" id="product-bleu-de-chanel" data-keywords="eau de parfum, edp, 50ml, 100ml">
+          <a href="Bleu De Chanel.html">
+          <img src="images/Bleu de chanel 2.jpeg"  alt="Bleu de Chanel" />
+          <p class="caption">Bleu de chanel</p>
+          </a>
+        </div>
+        <div class="Product-card" id="product-dior-savage" data-keywords="eau de toilette, edt, 60ml, 100ml, sauvage">
+          <a href="Dior Savage.html">
+          <img src="images/Dior savage.jfif" alt="Dior Savage" />
+          <p class="caption">Dior Savage</p>
+          </a>
+        </div>
+    </div>
+    <div class="hero" id="skincare">
+      <img src="images/Skin and Hair Care Hero.jpg" alt="skin and hair care " />
+    </div>
+    <div class="sub-categories1">
+      <h3>Skin Care</h3>
+    </div>
+    <div id="Skin-container" class="Skin-container">
+        <div class="Product-card" id="product-face-washes" data-keywords="cleanser, foaming, gel, 100ml, 150ml">
+          <a href="Facewash.html">
+          <img src="images/Face wash.jfif" alt="Face Washes" />
+          <p class="caption">Face washes</p>
+          </a>
+        </div>
+
+        <div class="Product-card" id="product-serums" data-keywords="vitamin c, hyaluronic, 30ml, anti-aging, brightening">
+          <a href="Serums.html">
+          <img src="images/Serum.jfif" alt="Serums" />
+          <p class="caption">Serums</p>
+          </a>
+        </div>
+        <div class="Product-card" id="product-spfs" data-keywords="spf30, spf50, sunscreen, 50ml, water-resistant">
+          <a href="SPF.html">
+          <img src="images/SPF.jfif" alt="SPFs" />
+          <p class="caption">SPFs</p>
+          </a>
+        </div>
+    </div>
+    <div class="sub-categories1" id="haircare">
+      <h3>Hair Care</h3>
+    </div>
+    <div id="Hair-container" class="Hair-container">
+        <div class="Product-card" id="product-hair-oils" data-keywords="nourishing, argan, coconut, 100ml">
+          <a href="Hair Oil.html">
+          <img src="images/Hair Oil.jfif" alt="Hair Oil" />
+          <p class="caption">Hair Oils</p>
+          </a>
+        </div>
+
+        <div class="Product-card" id="product-hair-essentials" data-keywords="shampoo, conditioner, hair mask, 200ml">
+          <a href="Hair Ess.html">
+          <img src="images/Hair ess.jpg" alt="Hair Essentials"/>
+          <p class="caption">Hair Essentials</p>
+          </a>
+        </div>
+        </div>
+  </main>
+
+  <footer class="footer"id="contact">
+    <div class="footer-content-wrapper">
+        
+        <div class="footer-column logo-column">
+            <img src="images/LogoBGR.png" class="footer-logo" alt="The Triple Act logo">
+            </div>
+
+        <div class="footer-column menu-column">
+            <h4>Main menu</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Perfumes</a></li>
+                    <li><a href="#">Attars</a></li>
+                    <li><a href="#">Hair Care</a></li>
+                    <li><a href="#">Skin Care</a></li>                  
+                </ul>
+            </div>
+
+            <div class="footer-column contact-column">
+                <h4>Get in touch</h4>
+                <p>
+                    <i class="fas fa-phone-alt"></i>
+                    <a href="tel:0312345789">03 123456789</a>
+                </p>
+                <p>
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:TheTripleAct@example.com">TheTripleAct@gmail.com</a>
+                </p>
+
+                <h4 class="follow-heading">Follow us</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column services-column">
+                <h4>Customer Services</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Terms Related To Order</a></li>
+                    <li><a href="#">Terms Related To Shipping</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Refund & Exchange Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>Copyright © 2025<b> The Triple Act</b></p>
+    </div>
+</footer>
+
+<!-- CHATBOT PART -->
+
+<button id="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
+    <i class="fas fa-comment"></i>
+</button>
+
+<div id="chat-window" aria-hidden="true" role="dialog" aria-label="Chat window">
+    <div class="chat-header">✨ Chat With Triplex</div>
+    <div id="chat-content" class="chat-content">
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Type here...">
+        <button id="chat-send" onclick="sendMessage()">Send</button>
+    </div> 
+</div>
+
+<!-- CHATBOT PART End -->
+<script src="chatbot.js"></script>
+<script>
+  (function(){
+    const input = document.getElementById('site-search');
+    const suggestions = document.getElementById('search-suggestions');
+
+    function slugify(text){
+      return text.toString().toLowerCase().trim().replace(/[^a-z0-9]+/g,'-');
+    }
+
+    // build product list from page
+    const products = Array.from(document.querySelectorAll('.Product-card')).map(card=>{
+      const captionEl = card.querySelector('.caption');
+      const name = captionEl ? captionEl.textContent.trim() : '';
+      const id = card.id || 'product-' + slugify(name);
+      if(!card.id) card.id = id;
+      return { name, id, el: card, type: 'product' };
+    });
+
+    // categories available on the page (id should match section id)
+    const categories = [
+      { name: 'Fragrances', id: 'fragrances', keywords: ['fragrance','perfume','perfumes','attar','attars','scent'], type: 'category' },
+      { name: 'Skin Care', id: 'skincare', keywords: ['skin','skincare','serum','spf','face','face wash','cleanser'], type: 'category' },
+      { name: 'Hair Care', id: 'haircare', keywords: ['hair','shampoo','conditioner','oil','haircare'], type: 'category' }
+    ];
+
+    // combined searchable items
+    const items = [...products, ...categories];
+
+    function clearSuggestions(){
+      suggestions.innerHTML = '';
+      suggestions.classList.remove('show');
+    }
+
+    function showSuggestions(matches){
+      suggestions.innerHTML = '';
+      if(!matches.length){ clearSuggestions(); return; }
+      matches.forEach(m=>{
+        const div = document.createElement('div');
+        div.className = 'suggestion-item';
+        div.setAttribute('role','option');
+
+        if(m.type === 'category'){
+          div.innerHTML = `<strong>${m.name}</strong> <span style="color:#0066cc"> — Category</span>`;
+        } else {
+          if(m.matched && m.matched.toLowerCase() !== m.name.toLowerCase()){
+            div.innerHTML = `<strong>${m.name}</strong> <span style="color:#666"> — ${m.matched}</span>`;
+          } else {
+            div.textContent = m.name;
+          }
+        }
+
+        div.addEventListener('click', ()=>{
+          clearSuggestions();
+          // Immediately clear and blur the search input
+          input.value = '';
+          input.blur();
+
+          // navigate to the target element (product or section)
+          const target = document.getElementById(m.id);
+          if(target){
+            target.scrollIntoView({behavior:'smooth', block:'center'});
+            // add a temporary highlight to show the user where we navigated
+            target.classList.add('highlight');
+            setTimeout(()=> target.classList.remove('highlight'), 2000);
+          }
+        });
+        suggestions.appendChild(div);
+      });
+      suggestions.classList.add('show');
+    }
+
+    input.addEventListener('input', function(){
+      const q = this.value.trim().toLowerCase();
+      if(!q){ clearSuggestions(); return; }
+      const matches = items.map(item=>{
+        const nameLower = item.name.toLowerCase();
+        const keywords = (item.type === 'product') ? (item.el.dataset.keywords || '').split(',').map(s=>s.trim()).filter(Boolean) : (item.keywords || []);
+        if(nameLower.includes(q)) return {...item, matched: item.name};
+        const found = keywords.find(k=>k.toLowerCase().includes(q));
+        if(found) return {...item, matched: found};
+        return null;
+      }).filter(Boolean);
+      showSuggestions(matches);
+    });
+
+    // hide on outside click
+    document.addEventListener('click', function(e){
+      if(!e.target.closest('.search-box')){
+        clearSuggestions();
+      }
+    });
+
+    // Allow Enter to go to first match
+    input.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){
+        const first = suggestions.querySelector('.suggestion-item');
+        if(first){ first.click(); e.preventDefault(); }
+      }
+    });
+
+  })();
+</script>
+<script>
+  // Display login name and setup profile dropdown + logout
+  document.addEventListener('DOMContentLoaded', function(){
+    const name = sessionStorage.getItem('firstName');
+    const accountEl = document.getElementById('account-name');
+    if(accountEl){
+      accountEl.textContent = name ? name : 'ACCOUNT';
+    }
+
+    const btn = document.getElementById('account-btn');
+    const dropdown = document.getElementById('profile-dropdown-content');
+    const profileDropdown = document.getElementById('profile-dropdown');
+
+    function closeDropdown(){
+      if(dropdown){ dropdown.classList.remove('show'); btn.setAttribute('aria-expanded','false'); dropdown.setAttribute('aria-hidden','true'); }
+    }
+
+    if(btn && dropdown){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        const open = dropdown.classList.toggle('show');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        dropdown.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
+
+      document.addEventListener('click', function(e){
+        if(!e.target.closest('#profile-dropdown')) closeDropdown();
+      });
+
+      // Logout handler
+      const logout = document.getElementById('logout-btn');
+      if(logout){
+        logout.addEventListener('click', function(e){
+          e.preventDefault();
+          sessionStorage.removeItem('firstName');
+          // redirect to login page
+          window.location.href = 'index.html';
+        });
+      }
+
+      // View profile placeholder - could be expanded
+      const view = document.getElementById('profile-view');
+      if(view){
+        view.addEventListener('click', function(e){
+          e.preventDefault();
+          const n = sessionStorage.getItem('firstName') || 'Guest';
+          alert('Profile\n\nName: ' + n + '\n\n(Placeholder profile screen)');
+        });
+      }
+    }
+  });
+</script>
+
+<script>
+  // Make category cards clickable and keyboard accessible 🔧
+  (function(){
+    const cards = document.querySelectorAll('.category-card[data-target]');
+    cards.forEach(card=>{
+      function navigate(){
+        const targetId = card.dataset.target;
+        const target = document.getElementById(targetId);
+        if(target){
+          target.scrollIntoView({behavior:'smooth', block:'center'});
+          target.classList.add('highlight');
+          setTimeout(()=> target.classList.remove('highlight'), 2000);
+        } else {
+          const categories = document.getElementById('categories');
+          if(categories){
+            categories.scrollIntoView({behavior:'smooth', block:'start'});
+            categories.classList.add('highlight');
+            setTimeout(()=> categories.classList.remove('highlight'), 2000);
+          }
+        }
+      }
+
+      card.addEventListener('click', navigate);
+
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          navigate();
+        }
+      });
+
+      // Improve focus visibility for keyboard users
+      card.addEventListener('focus', ()=> card.classList.add('highlight'));
+      card.addEventListener('blur', ()=> card.classList.remove('highlight'));
+    });
+  })();
+</script>
+
+</body>
+</html>
+<script>
+function toggleDropdown(event) {
+    event.stopPropagation(); 
+    document.getElementById("categoryDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks anywhere else
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+</script>

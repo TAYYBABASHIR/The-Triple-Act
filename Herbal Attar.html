@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Triple Act • Herbal Attars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/Favicon.png" sizes="80x80" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        :root {
+            --primary-gold: #C5A028;
+            --dark-gold: #7e5c00;
+            --dark-text: #333;
+            --light-gray: #f8f8f8;
+            --border-gray: #ccc;
+        }
+
+        body {
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-gray);
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+ .cart-icon a {
+    text-decoration: none;
+    color: inherit;
+}
+
+        .logo {
+            height: 100px;
+            width: auto;
+            cursor: pointer;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-right: 45px;
+        }
+
+        .header-icons i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .back-icon { 
+            cursor: pointer; padding: 10px; border-radius: 50%; 
+            transition: background 0.3s; display: flex; align-items: center; 
+        }
+        .back-icon:hover { background-color: #f0f0f0; }    
+
+        @media (min-width: 768px) {
+            .product-page {
+                max-width: 1200px;
+                display: flex;
+                gap: 40px;
+                padding: 40px 30px;
+                margin: 0 auto;
+            }
+        }
+
+        .product-image-container {
+            text-align: center;
+            background-color: var(--light-gray);
+            width: 400px;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .product-image-container img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        .product-details {
+            flex: 1;
+            max-width: 55%;
+        }
+
+        .product-details h1 {
+            font-size: 25px;
+            font-weight: 550;
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        .price {
+            font-size: 28px;
+            color: var(--dark-gold);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .quantity-selector {
+            display: inline-flex;
+            border: 1px solid var(--border-gray);
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .qty-btn, .quantity {
+            padding: 10px 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            background: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .add-to-cart-btn {
+            flex-grow: 1;
+            padding: 15px 20px;
+            background-color: var(--dark-gold);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #A6851F;
+        }
+
+        .variants {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .variants select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-gray);
+            border-radius: 5px;
+            margin-left: 10px;
+            min-width: 150px;
+        }
+
+        .size-btn {
+            padding: 10px 20px;
+            background-color: #f8f8f8;
+            border: 1px solid var(--border-gray);
+            cursor: pointer;
+            margin: 10px 10px 0 0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .size-btn.selected {
+            background-color: var(--dark-gold);
+            color: white;
+        }
+
+        .description-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-gray);
+            padding: 15px 0;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .footer { background-color: #000; color: #fff; padding-top: 50px; position: relative; }
+        .footer-content-wrapper { display: flex; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 0 20px 0 220px; }
+        .footer-logo { max-width: 200px; filter: invert(1); position: absolute; left: 40px; top: 50px; }
+        .footer ul { list-style: none; padding: 0; }
+        .footer a { color: #fff; text-decoration: none; opacity: 0.7; font-size: 13px; }
+        .footer-bottom { border-top: 1px solid #333; text-align: center; padding: 20px; margin-top: 40px; font-size: 12px; }
+
+        @media (max-width: 767px) {
+            .product-page { display: block; padding: 20px; }
+            .product-image-container { width: 100%; height: auto; }
+            .product-details { max-width: 100%; }
+            .footer-content-wrapper { padding-left: 20px; flex-direction: column; gap: 30px; }
+            .footer-logo { position: static; margin: 0 auto 20px; display: block; }
+        }
+    </style>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="back-icon" onclick="location.href='Home.html#Attar-container'"><i class="fas fa-arrow-left"></i></div>
+        <img class="logo" src="images/LogoBGR 1.png" alt="The Triple Act">
+        <div class="header-icons">
+            <i class="fas fa-search"></i>
+            <div class="cart-icon">
+                <a href="cart.html" style="color: inherit;"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-page">
+        <div class="product-image-container">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="images/SAFFRON ATTAR.jpg" class="d-block w-100" alt="SAFFRON ATTAR">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/SANDAL WOOD ATTAR.jpg" class="d-block w-100" alt="SANDAL WOOD ATTAR">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="product-details">
+            <h1><span id="current-variant">Saffron</span> Attar (<span class="selected-size">15ml</span>)</h1>
+            <p class="price">Rs 650</p>
+            
+            <div class="quantity-selector">
+                <button class="qty-btn" id="minus">-</button>
+                <span class="quantity">1</span>
+                <button class="qty-btn" id="plus">+</button>
+            </div>
+
+            <div class="product-meta">
+                <p><strong>Category:</strong> Fragrances</p>
+                <p><strong>Type:</strong> Herbal Attars</p>
+                <div class="variants">
+                    <strong>Variant:</strong> 
+                    <select id="variantSelect">
+                        <option value="Saffron">Saffron</option>
+                        <option value="Sandal Wood">Sandal Wood</option>
+                    </select>
+                </div>
+                <div class="size-selection">
+                    <button class="size-btn selected" data-size="15ml">15ml</button>
+                    <button class="size-btn" data-size="30ml">30ml</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="add-to-cart-btn" onclick="sendToCart()">ADD TO CART</button>
+            </div>
+
+            <div class="description-section" data-bs-toggle="collapse" data-bs-target="#descriptionCollapse">
+                <h2>Description</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="collapse" id="descriptionCollapse">
+                <div class="description-content p-3 border rounded bg-light" style="font-size: 14px;">
+                    <h3>The Wisdom of Ancient Wellness</h3>
+                    <p>Reconnect with the earth through <b>The Triple Act's Herbal Attar Collection</b>. Alcohol-free and deeply concentrated.</p>
+                    <p><b>1. Saffron:</b> Warm, honeyed, and opulent. A regal scent that radiates warmth.<br>
+                    <b>2. Sandal Wood:</b> Creamy, balsamic, and meditative. The ultimate scent for calm and focus.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-column"><img src="images/LogoBGR.png" class="footer-logo"></div>
+            <div class="footer-column">
+                <h4>Main menu</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Attars</a></li>
+                    <li><a href="#">Skin Care</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Get in touch</h4>
+                <p><i class="fas fa-envelope"></i> TheTripleAct@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>Copyright © 2025 <b>The Triple Act</b></p></div>
+    </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // --- 1. CONFIGURATION & STATE ---
+    const priceMap = { '15ml': 650, '30ml': 1150 };
+    let unitPrice = 650; 
+    
+    const qtySpan = document.querySelector('.quantity');
+    const priceEl = document.querySelector('.price');
+    const variantSelect = document.getElementById('variantSelect');
+    const variantTitle = document.getElementById('current-variant');
+    const carouselElement = document.getElementById('productCarousel');
+    const carousel = new bootstrap.Carousel(carouselElement);
+
+    // --- 2. QUANTITY LOGIC ---
+    document.getElementById('plus').addEventListener('click', () => {
+        qtySpan.textContent = parseInt(qtySpan.textContent) + 1;
+        updatePrice();
+    });
+
+    document.getElementById('minus').addEventListener('click', () => {
+        let currentQty = parseInt(qtySpan.textContent);
+        if(currentQty > 1) {
+            qtySpan.textContent = currentQty - 1;
+            updatePrice();
+        }
+    });
+
+    // --- 3. SIZE SELECTION LOGIC ---
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            const selectedSize = this.dataset.size;
+            unitPrice = priceMap[selectedSize];
+            document.querySelector('.selected-size').textContent = selectedSize;
+            
+            updatePrice();
+        });
+    });
+
+    // --- 4. VARIANT SYNC ---
+    variantSelect.addEventListener('change', function() {
+        variantTitle.textContent = this.value;
+        const index = this.selectedIndex;
+        carousel.to(index);
+    });
+
+    // --- 5. PRICE CALCULATION ---
+    function updatePrice() {
+        const total = unitPrice * parseInt(qtySpan.textContent);
+        priceEl.textContent = 'Rs ' + total;
+    }
+
+    // --- 6. SINGLE ITEM CART LOGIC (OVERWRITE MODE) ---
+    function sendToCart() {
+        const variant = variantSelect.value;
+        const size = document.querySelector('.size-btn.selected').dataset.size;
+        const qty = parseInt(qtySpan.textContent);
+        const activeImg = document.querySelector('.carousel-item.active img').src;
+
+        const productData = {
+            name: variant + " Attar",
+            price: unitPrice,
+            quantity: qty,
+            size: size,
+            image: activeImg,
+            sku: "TTA-ATTAR-" + variant.substring(0,3).toUpperCase() + "-" + size
+        };
+
+        // This OVERWRITES 'cartItems' so only one product exists at a time
+        localStorage.setItem('cartItems', JSON.stringify([productData]));
+
+        alert("Success! " + variant + " (" + size + ") has been added to your cart.");
+        window.location.href = 'cart.html';
+    }
+
+    // --- 7. UI INTERACTION ---
+    const coll = document.getElementById('descriptionCollapse');
+    if(coll) {
+        coll.addEventListener('show.bs.collapse', () => {
+            document.querySelector('.toggle-icon').textContent = '-';
+        });
+        coll.addEventListener('hide.bs.collapse', () => {
+            document.querySelector('.toggle-icon').textContent = '+';
+        });
+    }
+
+    // Initialize display
+    updatePrice();
+</script>
+
+<!-- CHATBOT PART -->
+
+<button id="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
+    <i class="fas fa-comment"></i>
+</button>
+
+<div id="chat-window" aria-hidden="true" role="dialog" aria-label="Chat window">
+    <div class="chat-header">✨ Chat With Triplex</div>
+    <div id="chat-content" class="chat-content">
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Type here...">
+        <button id="chat-send" onclick="sendMessage()">Send</button>
+    </div> 
+</div>
+
+<!-- CHATBOT PART End -->
+<script src="chatbot.js"></script>
+</body>
+</html>

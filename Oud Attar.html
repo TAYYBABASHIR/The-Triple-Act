@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Triple Act • Oud Attars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/Favicon.png" sizes="80x80" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ... Your existing styles remain exactly the same ... */
+        *
+         { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; 
+        }
+        :root 
+        { --primary-teal: #00A9A3; --accent-red: #D9534F; --dark-text: #333; --light-gray: #f8f8f8; --border-gray: #ccc; 
+        }
+        body { 
+            color: var(--dark-text); line-height: 1.6;
+         }
+        header { 
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--border-gray); background-color: white; position: sticky; top: 0; z-index: 10; }
+        .logo {
+             height: 100px; width: auto; object-fit: contain; cursor: pointer; transition: opacity 0.3s ease; 
+            }
+        .logo:hover {
+             opacity: 0.8; 
+            }
+        .header-icons {
+             display: flex; align-items: center; gap: 40px; margin-right: 45px;
+             }
+        .header-icons i {
+             font-size: 20px; cursor: pointer;
+             }
+        .back-icon { 
+            cursor: pointer; padding: 10px; border-radius: 50%; 
+            transition: background 0.3s; display: flex; align-items: center; 
+        }
+        .back-icon:hover { background-color: #f0f0f0; }    
+        .cart-icon { 
+            position: relative; 
+        }
+         .cart-icon a {
+    text-decoration: none;
+    color: inherit;
+}
+
+        @media (min-width: 768px) { .product-page { max-width: 1200px; display: flex; gap: 40px; padding: 40px 30px; margin: 0 auto; } }
+        .product-image-container { text-align: center; background-color: var(--light-gray); width: 400px; height: 400px; }
+        .product-image-container img { height: 100%; object-fit: cover; }
+        .product-details { flex: 1; max-width: 55%; }
+        .product-details h1 { font-size: 32px; font-weight: 500; margin: 0 0 10px; color: black; }
+        .price { font-size: 28px; color: #7e5c00; font-weight: bold; margin-bottom: 20px; }
+        .quantity-selector { display: inline-flex; border: 1px solid var(--border-gray); border-radius: 50px; overflow: hidden; margin-right: 15px; margin-bottom: 20px; }
+        .qty-btn, .quantity { padding: 10px 15px; font-size: 18px; font-weight: bold; border: none; background: none; cursor: pointer; }
+        .action-buttons { display: flex; align-items: center; margin: 25px 0; }
+        .add-to-cart-btn { flex-grow: 1; padding: 15px 20px; background-color: #7e5c00; color: white; border: none; border-radius: 50px; font-size: 16px; font-weight: bold; text-transform: uppercase; cursor: pointer; }
+        .add-to-cart-btn:hover { background: #A6851F; }
+        .variants select { padding: 8px 12px; border: 1px solid var(--border-gray); border-radius: 5px; margin-left: 5px; min-width: 150px; }
+        .size-btn { padding: 10px 20px; background-color: #f8f8f8; border: 1px solid var(--border-gray); cursor: pointer; margin: 10px 10px 0 0; border-radius: 5px; }
+        .size-btn.selected { background-color: #7e5c00; color: white; }
+        .description-section { display: flex; justify-content: space-between; border-top: 1px solid var(--border-gray); border-bottom: 1px solid var(--border-gray); padding: 15px 0; margin-bottom: 40px; }
+        
+        .footer { background-color: #000; color: #fff; padding-top: 50px; position: relative; margin-top: 50px;}
+        .footer-content-wrapper { display: flex; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 0 20px 0 220px; }
+        .footer-column { flex-basis: 22%; }
+        .footer-logo { max-width: 300px; filter: invert(1); position: absolute; left: 40px; top: 50px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); text-align: center; padding: 20px; margin-top: 40px; }
+    @media (max-width: 1024px) {
+            .product-page {
+                gap: 24px;
+                padding: 30px 20px;
+            }
+
+            .product-image-container {
+                width: 45%;
+                max-width: 420px;
+                height: auto;
+            }
+
+            .product-image-container img {
+                height: auto;
+                width: 100%;
+            }
+
+            .product-details {
+                max-width: 55%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .product-page {
+                display: block;
+                padding: 20px;
+            }
+
+            .product-image-container {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            .product-image-container img {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-details {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .product-details h1 {
+                font-size: 20px;
+            }
+
+            .price {
+                font-size: 18px;
+            }
+
+            .header .logo,
+            .logo {
+                height: 60px;
+            }
+
+            .header-icons {
+                gap: 12px;
+                margin-right: 10px;
+            }
+
+            .back-icon i {
+                padding-left: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .icon-btn {
+                width: 48px;
+                height: 48px;
+                margin-right: 0;
+            }
+
+            .add-to-cart-btn {
+                width: 100%;
+                order: 2;
+            }
+
+            .icon-btn {
+                order: 1;
+            }
+
+            .variants select {
+                min-width: 120px;
+            }
+
+            .size-selection {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .description-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .footer-content-wrapper {
+                padding-left: 20px;
+                padding-right: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-logo {
+                position: static;
+                max-width: 140px;
+                height: auto;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-details h1 {
+                font-size: 18px;
+            }
+
+            .price {
+                font-size: 16px;
+            }
+
+            .qty-btn,
+            .quantity {
+                font-size: 16px;
+                padding: 8px 10px;
+            }
+
+            .add-to-cart-btn {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            header {
+                padding: 12px 10px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .header-icons i {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-logo {
+                position: static;
+                display: block;
+                margin: 0 auto 10px;
+                max-width: 140px;
+            }
+
+            .footer-content-wrapper {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="back-icon" onclick="location.href='Home.html#Attar-container'"><i class="fas fa-arrow-left"></i></div>
+        <img class="logo" src="images/LogoBGR 1.png" alt="The Triple Act">
+        <div class="header-icons">
+            <i class="fas fa-search"></i>
+            <div class="cart-icon">
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-page">
+        <div class="product-image-container">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1700">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="images/WHITE OUD.png" class="d-block w-100" alt="White Oud">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/BLACK OUD.png" class="d-block w-100" alt="Black Oud">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/SWEET OUD.png" class="d-block w-100" alt="Sweet Oud">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="product-details">
+            <h1>Oud Attar <span class="selected-size">15ml</span></h1>
+            <p class="price">Rs 550</p>
+            
+            <div class="quantity-selector">
+                <button class="qty-btn" id="minus-btn">-</button>
+                <span class="quantity">1</span>
+                <button class="qty-btn" id="plus-btn">+</button>
+            </div>
+
+            <div class="product-meta">
+                <p><strong>Category:</strong> Fragrances</p>
+                <p><strong>Availability:</strong> <span class="in-stock">In Stock</span></p>
+                <div class="variants">
+                    <strong>Variant:</strong> 
+                    <select id="variantSelect">
+                        <option value="White Oud">White Oud</option>
+                        <option value="Black Oud">Black Oud</option>
+                        <option value="Sweet Oud">Sweet Oud</option>
+                    </select>
+                </div>
+                <div class="size-selection">
+                    <button class="size-btn selected" data-size="15ml">15ml</button>
+                    <button class="size-btn" data-size="30ml">30ml</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="add-to-cart-btn" onclick="sendToCart()">ADD TO CART</button>
+            </div>
+
+            <div class="description-section" data-bs-toggle="collapse" data-bs-target="#descriptionCollapse" style="cursor: pointer;">
+                <h2>Description</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="collapse" id="descriptionCollapse">
+                <div class="description-content">
+                    <p>Premium alcohol-free Oud Attars crafted for longevity and luxury.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-column logo-column">
+                <img src="images/LogoBGR.png" class="footer-logo" alt="Logo">
+            </div>
+            <div class="footer-column">
+                <h4>Main menu</h4>
+                <ul><li><a href="#" style="color: white; text-decoration: none;">Home</a></li><li><a href="#" style="color: white; text-decoration: none;">Perfumes</a></li></ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2025 <b>The Triple Act</b></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 1. Elements
+        const quantitySpan = document.querySelector('.quantity');
+        const priceEl = document.querySelector('.price');
+        const variantSelect = document.getElementById('variantSelect');
+        const sizeBtns = document.querySelectorAll('.size-btn');
+        const selectedSizeEl = document.querySelector('.selected-size');
+        const carouselElement = document.getElementById('productCarousel');
+        const carousel = new bootstrap.Carousel(carouselElement);
+
+        // 2. Data
+        const priceMap = { '15ml': 550, '30ml': 1000 };
+        let unitPrice = 550;
+
+        // 3. Update Price Display
+        function updateTotalPrice() {
+            const qty = parseInt(quantitySpan.textContent) || 1;
+            priceEl.textContent = 'Rs ' + (unitPrice * qty);
+        }
+
+        // 4. Quantity Listeners
+        document.getElementById('plus-btn').addEventListener('click', () => {
+            quantitySpan.textContent = parseInt(quantitySpan.textContent) + 1;
+            updateTotalPrice();
+        });
+
+        document.getElementById('minus-btn').addEventListener('click', () => {
+            let current = parseInt(quantitySpan.textContent);
+            if (current > 1) {
+                quantitySpan.textContent = current - 1;
+                updateTotalPrice();
+            }
+        });
+
+        // 5. Variant & Carousel Sync
+        variantSelect.addEventListener('change', (e) => {
+            const index = variantSelect.selectedIndex;
+            carousel.to(index);
+        });
+
+        // 6. Size Selection
+        sizeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                sizeBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                const size = btn.dataset.size;
+                unitPrice = priceMap[size];
+                selectedSizeEl.textContent = size;
+                updateTotalPrice();
+            });
+        });
+
+        // 7. Toggle Icon Switcher
+        const collapseEl = document.getElementById('descriptionCollapse');
+        collapseEl.addEventListener('show.bs.collapse', () => document.querySelector('.toggle-icon').textContent = '-');
+        collapseEl.addEventListener('hide.bs.collapse', () => document.querySelector('.toggle-icon').textContent = '+');
+
+        // 8. CART LOGIC
+        function sendToCart() {
+            const qty = parseInt(quantitySpan.textContent);
+            const variant = variantSelect.value;
+            const size = document.querySelector('.size-btn.selected').dataset.size;
+            const activeImg = document.querySelector('.carousel-item.active img').src;
+
+            // Generate a unique ID to distinguish between variants/sizes
+            const productID = `OUD-${variant}-${size}`.toUpperCase().replace(/\s+/g, '-');
+
+            const productData = {
+                id: productID,
+                name: `Oud Attar - ${variant}`,
+                price: unitPrice,
+                size: size,
+                image: activeImg,
+                quantity: qty,
+                totalPrice: unitPrice * qty
+            };
+
+            // Get existing cart or initialize empty
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Check if item already exists
+            const existingItemIndex = cart.findIndex(item => item.id === productID);
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += qty;
+                cart[existingItemIndex].totalPrice = cart[existingItemIndex].quantity * cart[existingItemIndex].price;
+            } else {
+                cart.push(productData);
+            }
+
+            // Save and Redirect
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            alert(`${variant} (${size}) added to cart!`);
+            window.location.href = 'cart.html';
+        }
+    </script>
+
+    <!-- CHATBOT PART -->
+
+<button id="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
+    <i class="fas fa-comment"></i>
+</button>
+
+<div id="chat-window" aria-hidden="true" role="dialog" aria-label="Chat window">
+    <div class="chat-header">✨ Chat With Triplex</div>
+    <div id="chat-content" class="chat-content">
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Type here...">
+        <button id="chat-send" onclick="sendMessage()">Send</button>
+    </div> 
+</div>
+
+<!-- CHATBOT PART End -->
+<script src="chatbot.js"></script>
+</body>
+</html>

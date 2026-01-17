@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - The Triple Act</title>
+    <link rel="icon" type="image/png" href="images/Favicon.png" sizes="16x16">
+
+    <style>
+        * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(to right bottom, #FFFFFF, #c5eaf5, #FFFFFF); /* Light blue background from image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.logo-wrapper {
+    position: absolute;
+    top: -28px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.logo-circle {
+    background: none;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 25px 20px rgba(0,0,0,0.05);
+}
+
+.logo-circle img {
+    width: 100%;
+    height: auto;
+}
+
+.login-card {
+    background: white;
+    padding: 60px 40px 40px 40px;
+    margin-top: 10px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    height: 470px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+/* Input Styling */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1.8px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+}
+
+.input-group input:hover,
+.input-group input:focus {
+    border-color: #ff8902; /* glowing orange */
+    box-shadow: 0 8px 20px rgba(224, 123, 120, 0.18);
+    transform: translateY(-2px); /* slight lift */
+}
+
+.error{color:#b00020;font-size:13px;min-height:18px;margin-top:6px;text-align:left}
+
+.login-btn {
+    background: linear-gradient(180deg, #f4a3a0, #e07b78);
+    color: white;
+    border: none;
+    border-radius: 13px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 10px 30px; /* increased horizontal padding for ~20px more width */
+    transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+box-shadow: 0 0 20px 5px rgba(224, 123, 120, 0.35);
+}
+
+.login-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(224,123,120,0.12);
+}
+
+/* Footer & Button Styling */
+.footer-row {
+    display: flex;
+    justify-content: space-between; /* sign-up text left, button right */
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.signup-text {
+    font-size: 13px; /* slightly smaller */
+    color: #6d7880; /* slightly darker for legibility */
+    white-space: nowrap; /* keep text on one line next to the button */
+    margin-top: -10px; /* align better with button */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .login-container { padding: 18px; }
+    .login-card { padding: 48px 28px 28px 28px; border-radius: 22px; }
+    .logo-wrapper { top: -32px; }
+    .logo-circle { width: 92px; height: 92px; }
+    h1 { font-size: 20px; }
+    .subtitle { font-size: 13px; margin-bottom: 20px; }
+    .input-group label { font-size: 13px; }
+    .input-group input { font-size: 15px; padding: 11px 12px; }
+    .login-btn { font-size: 15px; padding: 10px 24px; }
+}
+
+@media (max-width: 480px) {
+    body { align-items: flex-start; padding-top: 36px; }
+    .login-container { max-width: 420px; padding: 12px; }
+    .login-card { padding: 36px 18px 22px 18px; border-radius: 16px; }
+    .logo-wrapper { top: -30px; }
+    .logo-circle { width: 84px; height: 84px; }
+    h1 { font-size: 18px; }
+    .subtitle { font-size: 13px; }
+    .input-group label { font-size: 13px; }
+    .input-group input { font-size: 15px; padding: 10px 12px; }
+    .footer-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    .signup-text { text-align: left; white-space: normal; margin-top: 0; }
+    .login-btn { width: 100%; padding: 12px; }
+}
+
+@media (min-width: 1024px) {
+    .login-container { max-width: 520px; }
+    .login-card { padding: 68px 48px 48px 48px; }
+}
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-wrapper">
+            <div class="logo-circle">
+                <img src="images/LogoBGR.png" alt="The Triple Act Logo">
+            </div>
+        </div>
+
+        <div class="login-card">
+            <h1>Welcome to The Triple Act</h1>
+            <p class="subtitle">Log in to continue shopping</p>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" placeholder="Enter your first name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div id="error" class="error" aria-live="polite"></div>
+
+                <div class="footer-row">
+                    <p class="signup-text">Don't have an account? No problem.</p>
+                    <button type="submit" id="login-btn" class="login-btn">Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        (function () {
+            const loginForm = document.getElementById('loginForm');
+            const errorEl = document.getElementById('error');
+            const firstNameInput = document.getElementById('firstName');
+            const passwordInput = document.getElementById('password');
+            const loginBtn = document.getElementById('login-btn');
+
+            function redirectToHome() { window.location.href = 'Home.html'; }
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    if (errorEl) errorEl.textContent = '';
+
+                    const firstName = firstNameInput.value.trim();
+                    const password = passwordInput.value;
+
+                    if (!firstName) { if (errorEl) errorEl.textContent = 'Please enter your first name.'; firstNameInput.focus(); return; }
+                    if (!password || password.length < 2) { if (errorEl) errorEl.textContent = 'Please enter your password.'; passwordInput.focus(); return; }
+
+                    try {
+                        sessionStorage.setItem('firstName', firstName); // keep compatibility with other pages
+                    } catch (err) { /* ignore storage errors */ }
+
+                    redirectToHome();
+                });
+            }
+
+            if (sessionStorage.getItem('firstName')) {
+                redirectToHome();
+            }
+
+            // Allow Enter on inputs to submit
+            [firstNameInput, passwordInput].forEach(function (el) {
+                if (!el) return;
+                el.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { e.preventDefault(); if (loginBtn) loginBtn.click(); }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Triple Act • Serums</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/Favicon.png" sizes="80x80" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif;
+         }
+        :root { 
+            --primary-teal: #00A9A3; --accent-red: #D9534F; --dark-text: #333; --light-gray: #f8f8f8; --border-gray: #ccc; 
+        }
+        body {
+             color: var(--dark-text); line-height: 1.6;
+             }
+        header {
+             display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; border-bottom: 1px solid var(--border-gray); background-color: white; position: sticky; top: 0; z-index: 10; }
+        .logo {
+             height: 100px; width: auto; object-fit: contain; cursor: pointer; transition: opacity 0.3s ease;
+             }
+        .logo:hover { 
+            opacity: 0.8; 
+        }
+        .header-icons {
+             display: flex; align-items: center; gap: 40px; margin-right: 45px; 
+            }
+        .header-icons i {
+             font-size: 20px; cursor: pointer; 
+        }
+        .back-icon { 
+            cursor: pointer; padding: 10px; border-radius: 50%; 
+            transition: background 0.3s; display: flex; align-items: center; 
+        }
+        .back-icon:hover { background-color: #f0f0f0; }    
+        .cart-icon {
+             position: relative;
+             }
+ .cart-icon a {
+    text-decoration: none;
+    color: inherit;
+}
+
+        .product-page {
+             max-width: 1200px; margin: 0 auto; display: flex; gap: 40px; padding: 40px 30px; 
+            }
+        .product-image-container { 
+            background-color: var(--light-gray); width: 400px; height: 400px; flex-shrink: 0; 
+        }
+        .product-image-container img { 
+            height: 400px; width: 100%; object-fit: cover; 
+        }
+        .product-details {
+             flex: 1; 
+            }
+        .product-details h1 {
+             font-size: 25px; font-weight: 550; margin-bottom: 10px; color: black;
+             }
+        .price { 
+            font-size: 28px; color: #1c83ac; font-weight: bold; margin-bottom: 20px;
+         }
+        
+        .quantity-selector {
+             display: inline-flex; border: 1px solid var(--border-gray); border-radius: 50px; margin-right: 15px; margin-bottom: 20px; 
+            }
+        .qty-btn, .quantity { 
+            padding: 10px 15px; font-size: 18px; font-weight: bold; border: none; background: none; cursor: pointer; 
+        }
+        
+        .action-buttons {  
+            display: flex; align-items: center; margin: 25px 0; gap: 15px; 
+        }
+        .add-to-cart-btn { 
+            flex-grow: 1; padding: 15px 20px; background: #1c83ac; color: white; border: none; border-radius: 50px; font-size: 16px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .add-to-cart-btn:hover { 
+            background-color: #01676e;
+         }
+        .size-btn {
+             padding: 8px 20px; background-color: #f8f8f8; border: 1px solid var(--border-gray); cursor: pointer; margin-right: 10px; border-radius: 5px; }
+        .size-btn.selected { 
+            background-color: #1c83ac; color: white;
+         }      
+        .variants select { 
+            padding: 8px 12px; border: 1px solid var(--border-gray); border-radius: 5px; margin-left: 5px; min-width: 150px; 
+        }
+        .in-stock { 
+            color: green; font-weight: 500;
+         }
+        .description-section {
+             display: flex; justify-content: space-between; border-top: 1px solid var(--border-gray); padding: 15px 0; cursor: pointer; 
+            }
+        .description-content {
+             padding: 15px; background: #f9f9f9; border-radius: 5px; margin-bottom: 20px; 
+            }
+        footer {
+             background: #000; color: #fff; padding: 50px 20px; margin-top: 50px;
+             }
+        .footer-content-wrapper {
+             display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: 0 auto;
+             }
+        .footer-column { 
+            flex: 1; min-width: 200px; margin-bottom: 20px; 
+        }
+        .footer-logo {
+             max-width: 150px; filter: invert(1); 
+            }
+        .footer a {
+             color: #fff; text-decoration: none; opacity: 0.8; 
+            }
+        .footer-bottom { 
+            text-align: center; border-top: 1px solid #333; padding-top: 20px; margin-top: 20px; 
+        }
+
+        @media (max-width: 768px) {
+            .product-page { flex-direction: column; align-items: center; }
+            .product-image-container { width: 100%; height: auto; }
+            .product-image-container img { height: auto; }
+        }
+        @media (max-width: 1024px) {
+            .product-page {
+                gap: 24px;
+                padding: 30px 20px;
+            }
+
+            .product-image-container {
+                width: 45%;
+                max-width: 420px;
+                height: auto;
+            }
+
+            .product-image-container img {
+                height: auto;
+                width: 100%;
+            }
+
+            .product-details {
+                max-width: 55%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .product-page {
+                display: block;
+                padding: 20px;
+            }
+
+            .product-image-container {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            .product-image-container img {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-details {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .product-details h1 {
+                font-size: 20px;
+            }
+
+            .price {
+                font-size: 18px;
+            }
+
+            .header .logo,
+            .logo {
+                height: 60px;
+            }
+
+            .header-icons {
+                gap: 12px;
+                margin-right: 10px;
+            }
+
+            .back-icon i {
+                padding-left: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .icon-btn {
+                width: 48px;
+                height: 48px;
+                margin-right: 0;
+            }
+
+            .add-to-cart-btn {
+                width: 100%;
+                order: 2;
+            }
+
+            .icon-btn {
+                order: 1;
+            }
+
+            .variants select {
+                min-width: 120px;
+            }
+
+            .size-selection {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .description-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .footer-content-wrapper {
+                padding-left: 20px;
+                padding-right: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-logo {
+                position: static;
+                max-width: 140px;
+                height: auto;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-details h1 {
+                font-size: 18px;
+            }
+
+            .price {
+                font-size: 16px;
+            }
+
+            .qty-btn,
+            .quantity {
+                font-size: 16px;
+                padding: 8px 10px;
+            }
+
+            .add-to-cart-btn {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            header {
+                padding: 12px 10px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .header-icons i {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-logo {
+                position: static;
+                display: block;
+                margin: 0 auto 10px;
+                max-width: 140px;
+            }
+
+            .footer-content-wrapper {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="back-icon" onclick="location.href='Home.html#Skin-container'"><i class="fas fa-arrow-left"></i></div>
+        <img class="logo" src="images/LogoBGR 1.png" alt="The Triple Act">
+        <div class="header-icons">
+            <i class="fas fa-search"></i>
+            <div class="cart-icon"></div>
+                <a href="cart.html">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-page">
+        <div class="product-image-container">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active"><img src="images/VITAMIN C SERUM.jpg" class="d-block w-100" alt="Vitamin C"></div>
+                    <div class="carousel-item"><img src="images/GLUTA SERUM.png" class="d-block w-100" alt="Glutathione"></div>
+                    <div class="carousel-item"><img src="images/Haylaraunic Serum.jpg" class="d-block w-100" alt="Hyaluronic"></div>
+                    <div class="carousel-item"><img src="images/Niacinamide Serum.jpg" class="d-block w-100" alt="Niacinamide"></div>
+                    <div class="carousel-item"><img src="images/RETINOL SERUM.jpg" class="d-block w-100" alt="Retinol"></div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="product-details">
+            <h1>Serums <span class="selected-size">15ml</span></h1>
+            <p class="price">Rs 600</p>
+            
+            <div class="quantity-selector">
+                <button class="qty-btn" id="minus">-</button>
+                <span class="quantity">1</span>
+                <button class="qty-btn" id="plus">+</button>
+            </div>
+
+            <div class="product-meta">
+                <p><strong>Category:</strong> Skin Care</p>
+                <p><strong>Availability:</strong> <span class="in-stock">In Stock</span></p>
+                <div class="variants">
+                    <strong>Variant:</strong> 
+                    <select id="variantSelect">
+                        <option value="Vitamin C">Vitamin C</option>
+                        <option value="Glutathione">Glutathione</option>
+                        <option value="Hyaluronic">Hyaluronic</option>
+                        <option value="Niacinamide">Niacinamide</option>
+                        <option value="Retinol">Retinol</option>
+                    </select>
+                </div>
+                <div class="size-selection" style="margin-top: 15px;">
+                    <button class="size-btn selected" data-size="15ml">15ml</button>
+                    <button class="size-btn" data-size="30ml">30ml</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="add-to-cart-btn" onclick="sendToCart()">ADD TO CART</button>
+            </div>
+
+            <div class="description-section" data-bs-toggle="collapse" data-bs-target="#descriptionCollapse">
+                <h2>Description</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="collapse" id="descriptionCollapse">
+                <div class="description-content">
+                    <p>Elevate your skincare routine with <b>The Triple Act's Serum Collection</b>. Scientifically backed formulas designed to penetrate deep and address specific concerns like aging, dullness, and dehydration.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-column"><img src="images/LogoBGR.png" class="footer-logo"></div>
+            <div class="footer-column">
+                <h4>Main menu</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Skin Care</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p><i class="fas fa-phone"></i> 03 123456789</p>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>Copyright © 2025 The Triple Act</p></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- 1. CONFIGURATION ---
+        const priceMap = { '15ml': 600, '30ml': 1000 };
+        let unitPrice = 600;
+
+        const qtySpan = document.querySelector('.quantity');
+        const priceEl = document.querySelector('.price');
+        const variantSelect = document.getElementById('variantSelect');
+        const selectedSizeEl = document.querySelector('.selected-size');
+        const carouselEl = document.getElementById('productCarousel');
+        const carousel = new bootstrap.Carousel(carouselEl);
+
+        // --- 2. QUANTITY LOGIC ---
+        document.getElementById('plus').addEventListener('click', () => {
+            qtySpan.textContent = parseInt(qtySpan.textContent) + 1;
+            updateDisplayPrice();
+        });
+
+        document.getElementById('minus').addEventListener('click', () => {
+            let currentQty = parseInt(qtySpan.textContent);
+            if (currentQty > 1) {
+                qtySpan.textContent = currentQty - 1;
+                updateDisplayPrice();
+            }
+        });
+
+        // --- 3. SIZE & PRICE LOGIC ---
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const size = this.dataset.size;
+                unitPrice = priceMap[size];
+                
+                if (selectedSizeEl) selectedSizeEl.textContent = size;
+                updateDisplayPrice();
+            });
+        });
+
+        function updateDisplayPrice() {
+            const qty = parseInt(qtySpan.textContent);
+            priceEl.textContent = `Rs ${unitPrice * qty}`;
+        }
+
+        // --- 4. VARIANT IMAGE SYNC ---
+        variantSelect.addEventListener('change', (e) => {
+            const index = e.target.selectedIndex;
+            carousel.to(index);
+        });
+
+        // --- 5. CART CONNECTIVITY (ARRAY FORMAT) ---
+        function sendToCart() {
+            const qty = parseInt(qtySpan.textContent);
+            const variant = variantSelect.value;
+            const size = document.querySelector('.size-btn.selected').dataset.size;
+            const activeImg = document.querySelector('.carousel-item.active img').src;
+
+            const productData = {
+                name: `${variant} Serum`,
+                variant: variant,
+                size: size,
+                price: unitPrice,
+                quantity: qty,
+                image: activeImg,
+                sku: `TTA-SRM-${variant.substring(0,3).toUpperCase()}-${size.toUpperCase()}`
+            };
+
+            // Saves as an array to 'cartItems' for consistency with other pages
+            localStorage.setItem('cartItems', JSON.stringify([productData]));
+
+            // Feedback and Redirect
+            alert(`Success! ${variant} Serum (${size}) has been added to your cart.`);
+            window.location.href = 'cart.html';
+        }
+
+        // --- 6. UI EXTRAS (Description Toggle) ---
+        const descSection = document.querySelector('.description-section');
+        const toggleIcon = document.querySelector('.toggle-icon');
+        const collapseEl = document.getElementById('descriptionCollapse');
+
+        if (collapseEl) {
+            collapseEl.addEventListener('show.bs.collapse', () => toggleIcon.textContent = '-');
+            collapseEl.addEventListener('hide.bs.collapse', () => toggleIcon.textContent = '+');
+        }
+    </script>
+
+    <!-- CHATBOT PART -->
+
+<button id="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
+    <i class="fas fa-comment"></i>
+</button>
+
+<div id="chat-window" aria-hidden="true" role="dialog" aria-label="Chat window">
+    <div class="chat-header">✨ Chat With Triplex</div>
+    <div id="chat-content" class="chat-content">
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Type here...">
+        <button id="chat-send" onclick="sendMessage()">Send</button>
+    </div> 
+</div>
+
+<!-- CHATBOT PART End -->
+<script src="chatbot.js"></script>
+</body>
+</html>
